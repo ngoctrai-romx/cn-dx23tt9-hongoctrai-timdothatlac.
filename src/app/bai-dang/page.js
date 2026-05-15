@@ -73,7 +73,7 @@ function BaiDangContent() {
         {posts.length > 0 ? (
           <div className="posts-grid">
             {posts.map((post) => (
-              <a key={post.id} href={`/bai-dang/${post.id}`} className="post-card card">
+              <a key={post._id || post.id} href={`/bai-dang/${post._id || post.id}`} className="post-card card">
                 <div className="post-image-wrapper">
                   <img src={post.image} alt={post.title} className="post-image" />
                   <span className={`badge ${post.type === "lost" ? "badge-lost" : "badge-found"}`}>
@@ -85,7 +85,7 @@ function BaiDangContent() {
                   <h3 className="post-title">{post.title}</h3>
                   <p className="post-desc">{post.description}</p>
                   <div className="post-meta">
-                    <span className="post-location">📍 {post.location}</span>
+                    <span className="post-location">📍 {post.locationName || (typeof post.location === 'string' ? post.location : `${post.location?.lat?.toFixed(4)}, ${post.location?.lng?.toFixed(4)}`)}</span>
                     <span className="post-date">🕐 {post.date}</span>
                   </div>
                 </div>

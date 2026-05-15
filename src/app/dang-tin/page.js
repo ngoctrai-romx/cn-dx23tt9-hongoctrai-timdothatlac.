@@ -143,14 +143,20 @@ export default function DangTinPage() {
             {/* HÌNH ẢNH */}
             <div className="input-group" style={{ gridColumn: "1 / -1" }}>
               <label>Hình ảnh *</label>
-              <div className="upload-area">
-                <span className="upload-icon">📸</span>
-                <p>Nhấp để tải ảnh lên hoặc kéo thả ảnh vào đây</p>
-                <small className="text-muted">Hỗ trợ JPG, PNG (Tối đa 5MB)</small>
-                {/* Giả lập nút upload, sau này sẽ làm tính năng upload thật */}
-                <input type="file" accept="image/*" style={{ display: "none" }} id="file-upload" onChange={handleImageChange} />
-                <button type="button" className="btn btn-secondary btn-sm" style={{ marginTop: "10px" }} onClick={() => document.getElementById("file-upload").click()}>Chọn ảnh</button>
-              </div>
+              {imagePreview ? (
+                <div style={{ position: "relative", width: "fit-content", marginTop: "10px" }}>
+                  <img src={imagePreview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "300px", borderRadius: "12px", border: "1px solid var(--border-color)", display: "block" }} />
+                  <button type="button" onClick={() => setImagePreview("")} style={{ position: "absolute", top: "10px", right: "10px", background: "rgba(0,0,0,0.6)", color: "white", border: "none", borderRadius: "50%", width: "32px", height: "32px", cursor: "pointer", fontSize: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+                </div>
+              ) : (
+                <div className="upload-area">
+                  <span className="upload-icon">📸</span>
+                  <p>Nhấp để tải ảnh lên hoặc kéo thả ảnh vào đây</p>
+                  <small className="text-muted">Hỗ trợ JPG, PNG (Tối đa 5MB)</small>
+                  <input type="file" accept="image/*" style={{ display: "none" }} id="file-upload" onChange={handleImageChange} />
+                  <button type="button" className="btn btn-secondary btn-sm" style={{ marginTop: "10px" }} onClick={() => document.getElementById("file-upload").click()}>Chọn ảnh</button>
+                </div>
+              )}
             </div>
 
             {/* MÔ TẢ */}

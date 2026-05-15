@@ -240,7 +240,7 @@ export default function HomePage() {
                   <h3 className="post-title">{post.title}</h3>
                   <p className="post-desc">{post.description}</p>
                   <div className="post-meta">
-                    <span className="post-location">📍 {post.location}</span>
+                    <span className="post-location">📍 {post.locationName || (typeof post.location === 'string' ? post.location : `${post.location?.lat?.toFixed(4)}, ${post.location?.lng?.toFixed(4)}`)}</span>
                     <span className="post-date">🕐 {post.date}</span>
                   </div>
                 </div>
