@@ -1,4 +1,6 @@
 import "./globals.css";
+import AuthProvider from "./AuthProvider";
+import Header from "@/components/Header";
 
 export const metadata = {
   title: "Tìm Đồ Thất Lạc - Lost & Found",
@@ -10,40 +12,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="vi">
       <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
-  );
-}
-
-/* ============ HEADER COMPONENT ============ */
-function Header() {
-  return (
-    <header className="header">
-      <div className="header-inner container-wide">
-        <a href="/" className="logo">
-          <span className="logo-icon">🔍</span>
-          <span className="logo-text">
-            <span className="logo-name">TimDo</span>
-            <span className="logo-dot">.vn</span>
-          </span>
-        </a>
-
-        <nav className="nav">
-          <a href="/" className="nav-link">Trang chủ</a>
-          <a href="/bai-dang" className="nav-link">Tin đăng</a>
-          <a href="/dang-tin" className="nav-link">Đăng tin</a>
-          <a href="/huong-dan" className="nav-link">Hướng dẫn</a>
-        </nav>
-
-        <div className="header-actions">
-          <a href="/dang-nhap" className="btn btn-secondary btn-sm">Đăng nhập</a>
-          <a href="/dang-ky" className="btn btn-primary btn-sm">Đăng ký</a>
-        </div>
-      </div>
-    </header>
   );
 }
 

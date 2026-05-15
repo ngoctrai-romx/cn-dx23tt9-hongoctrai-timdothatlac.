@@ -1,14 +1,32 @@
 "use client";
 import { useState } from "react";
 
+import { signIn } from "next-auth/react";
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Tích hợp API đăng nhập sau
-    alert("Đang xử lý đăng nhập cho: " + email);
+    
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (res?.error) {
+        alert("Lỗi đăng nhập: " + res.error);
+      } else {
+        alert("Đăng nhập thành công!");
+        window.location.href = '/';
+      }
+    } catch (error) {
+      alert("Đã xảy ra lỗi hệ thống");
+      console.error(error);
+    }
   };
 
   return (

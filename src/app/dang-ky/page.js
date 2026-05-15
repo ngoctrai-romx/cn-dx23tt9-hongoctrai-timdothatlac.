@@ -17,14 +17,37 @@ export default function RegisterPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert("Mật khẩu xác nhận không khớp!");
       return;
     }
-    // TODO: Tích hợp API đăng ký sau
-    alert("Đang xử lý đăng ký cho sinh viên: " + formData.name);
+    
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          password: formData.password
+        })
+      });
+
+      const data = await res.json();
+      
+      if (res.ok) {
+        alert("Đăng ký thành công! Vui lòng đăng nhập.");
+        window.location.href = '/dang-nhap';
+      } else {
+        alert("Lỗi: " + data.error);
+      }
+    } catch (error) {
+      alert("Đã xảy ra lỗi hệ thống");
+      console.error(error);
+    }
   };
 
   return (

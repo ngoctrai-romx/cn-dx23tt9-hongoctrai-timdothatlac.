@@ -15,15 +15,67 @@ const MapPicker = dynamic(() => import("@/components/MapPicker"), {
 export default function DangTinPage() {
   const [type, setType] = useState("lost");
   const [position, setPosition] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      alert("Vui l?ng ch?n file h?nh ?nh!");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      alert("?nh kh?ng ???c v??t qu? 5MB!");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => setImagePreview(reader.result);
+    reader.readAsDataURL(file);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!position) {
       alert("Vui lòng chọn vị trí trên bản đồ!");
       return;
     }
-    // TODO: Gửi data lên API (sẽ làm ở các bước sau)
-    alert("Cảm ơn bạn! Tính năng gửi dữ liệu đang được hoàn thiện.\nVị trí đã chọn: " + position.lat.toFixed(5) + ", " + position.lng.toFixed(5));
+    
+    const formData = new FormData(e.target);
+    const data = {
+      title: formData.get('title'),
+      category: formData.get('category'),
+      date: formData.get('date'),
+      description: formData.get('description'),
+      type: type,
+      location: position,
+      locationName: `${position.lat.toFixed(5)}, ${position.lng.toFixed(5)}`,
+      image: imagePreview || undefined
+    };
+
+    try {
+      const res = await fetch('/api/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      
+      if (res.ok) {
+        alert("Đăng tin thành công!");
+        window.location.href = '/bai-dang';
+      } else {
+        if (res.status === 401) {
+          alert("Vui lòng đăng nhập để đăng tin");
+          window.location.href = '/dang-nhap';
+        } else {
+          alert("Lỗi: " + result.error);
+        }
+      }
+    } catch (error) {
+      alert("Đã xảy ra lỗi hệ thống");
+      console.error(error);
+    }
   };
 
   return (
@@ -61,6 +113,7 @@ export default function DangTinPage() {
               <label>Tiêu đề tin đăng *</label>
               <input 
                 type="text" 
+                name="title"
                 className="input" 
                 placeholder={type === "lost" ? "VD: Mất ví da màu nâu tại trường ĐH Trà Vinh" : "VD: Nhặt được CCCD tên Nguyễn Văn A"}
                 required
@@ -70,7 +123,7 @@ export default function DangTinPage() {
             {/* DANH MỤC */}
             <div className="input-group">
               <label>Danh mục *</label>
-              <select className="input" required>
+              <select name="category" className="input" required>
                 <option value="">-- Chọn danh mục --</option>
                 <option value="giay-to">Giấy tờ tùy thân</option>
                 <option value="dien-thoai">Điện thoại</option>
@@ -84,7 +137,7 @@ export default function DangTinPage() {
             {/* THỜI GIAN */}
             <div className="input-group">
               <label>Thời gian {type === "lost" ? "mất" : "nhặt"} (ước tính) *</label>
-              <input type="date" className="input" required />
+              <input type="date" name="date" className="input" required />
             </div>
 
             {/* HÌNH ẢNH */}
@@ -95,7 +148,7 @@ export default function DangTinPage() {
                 <p>Nhấp để tải ảnh lên hoặc kéo thả ảnh vào đây</p>
                 <small className="text-muted">Hỗ trợ JPG, PNG (Tối đa 5MB)</small>
                 {/* Giả lập nút upload, sau này sẽ làm tính năng upload thật */}
-                <input type="file" style={{ display: "none" }} id="file-upload" />
+                <input type="file" accept="image/*" style={{ display: "none" }} id="file-upload" onChange={handleImageChange} />
                 <button type="button" className="btn btn-secondary btn-sm" style={{ marginTop: "10px" }} onClick={() => document.getElementById("file-upload").click()}>Chọn ảnh</button>
               </div>
             </div>
@@ -104,6 +157,7 @@ export default function DangTinPage() {
             <div className="input-group" style={{ gridColumn: "1 / -1" }}>
               <label>Mô tả chi tiết *</label>
               <textarea 
+                name="description"
                 className="input" 
                 placeholder="Mô tả đặc điểm nhận dạng, màu sắc, nhãn hiệu hoặc các vật dụng bên trong..."
                 required

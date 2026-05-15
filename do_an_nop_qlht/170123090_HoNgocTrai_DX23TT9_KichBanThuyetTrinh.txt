@@ -1,0 +1,15 @@
+KỊCH BẢN THUYẾT TRÌNH VIDEO
+
+Kính chào thầy Nguyễn Nhứt Lam. Em tên là Hồ Ngọc Trai, MSSV 170123090, lớp DX23TT9. Hôm nay em xin trình bày đồ án chuyên ngành với đề tài: XÂY DỰNG WEBSITE TÌM KIẾM ĐỒ THẤT LẠC.
+
+Lý do em chọn đề tài là vì trong thực tế việc thất lạc đồ vật cá nhân diễn ra khá thường xuyên. Người mất đồ thường đăng tin trên mạng xã hội nhưng thông tin dễ bị trôi, còn người nhặt được đồ cũng khó tìm đúng chủ sở hữu. Vì vậy em xây dựng website hỗ trợ đăng tin và tìm kiếm đồ thất lạc.
+
+Website có các chức năng chính gồm đăng ký, đăng nhập, đăng tin mất đồ hoặc nhặt được đồ, xem danh sách bài đăng, tìm kiếm theo từ khóa, lọc theo danh mục và chọn vị trí trên bản đồ.
+
+Về công nghệ, em sử dụng Next.js và React để xây dựng giao diện, API Routes để xử lý backend, MongoDB và Mongoose để lưu dữ liệu, NextAuth để xác thực người dùng, bcryptjs để mã hóa mật khẩu và Leaflet kết hợp OpenStreetMap để hiển thị bản đồ.
+
+Kết quả đạt được là website đã có giao diện trang chủ, trang danh sách bài đăng, trang đăng tin, chức năng đăng ký đăng nhập, kết nối cơ sở dữ liệu MongoDB và tích hợp bản đồ chọn tọa độ.
+
+Do thời gian còn hạn chế, hệ thống vẫn cần phát triển thêm chức năng upload ảnh thật, trang quản trị, chat giữa người dùng và thông báo tự động.
+
+Em xin chân thành cảm ơn thầy đã theo dõi phần trình bày của em.

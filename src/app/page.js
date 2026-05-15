@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /* ============ MOCK DATA ============ */
 const CATEGORIES = [
@@ -93,7 +93,24 @@ import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [recentPosts, setRecentPosts] = useState(RECENT_POSTS);
   const router = useRouter();
+
+  useEffect(() => {
+    const loadRecentPosts = async () => {
+      try {
+        const res = await fetch("/api/posts");
+        if (!res.ok) return;
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          setRecentPosts(data.slice(0, 6));
+        }
+      } catch (error) {
+        console.warn("D?ng d? li?u m?u v? API b?i ??ng ch?a s?n s?ng", error);
+      }
+    };
+    loadRecentPosts();
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -210,8 +227,8 @@ export default function HomePage() {
           </div>
 
           <div className="posts-grid">
-            {RECENT_POSTS.map((post) => (
-              <a key={post.id} href={`/bai-dang/${post.id}`} className="post-card card">
+            {recentPosts.map((post) => (
+              <a key={post._id || post.id} href={`/bai-dang/${post._id || post.id}`} className="post-card card">
                 <div className="post-image-wrapper">
                   <img src={post.image} alt={post.title} className="post-image" />
                   <span className={`badge ${post.type === "lost" ? "badge-lost" : "badge-found"}`}>
@@ -219,7 +236,7 @@ export default function HomePage() {
                   </span>
                 </div>
                 <div className="post-body">
-                  <span className="post-category">{post.category}</span>
+                  <span className="post-category">{post.categoryName || post.category}</span>
                   <h3 className="post-title">{post.title}</h3>
                   <p className="post-desc">{post.description}</p>
                   <div className="post-meta">
