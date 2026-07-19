@@ -1,0 +1,34 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Admin.master.cs" Inherits="AdminMaster" %>
+
+<!DOCTYPE html>
+<html lang="vi">
+<head runat="server">
+    <meta charset="utf-8" />
+    <title>Trang quản trị - Apple Store</title>
+    <link href="~/Content/StyleSheet.css" rel="stylesheet" runat="server" id="lnkCss" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="header">
+            <a class="logo" href="QuanLySanPham.aspx"> AppleStore <span>| Quản trị</span></a>
+            <div class="header-right">
+                <asp:Label ID="lblAdmin" runat="server" />
+                <a href="../Default.aspx" target="_blank">Xem website</a>
+                <asp:LinkButton ID="btnDangXuat" runat="server" OnClick="btnDangXuat_Click">Đăng xuất</asp:LinkButton>
+            </div>
+        </div>
+        <div class="admin-layout">
+            <div class="admin-sidebar">
+                <a href="ThongKe.aspx">📊 Thống kê - Báo cáo</a>
+                <a href="QuanLySanPham.aspx">📱 Quản lý sản phẩm</a>
+                <a href="QuanLyDanhMuc.aspx">📂 Quản lý danh mục</a>
+                <a href="QuanLyDonHang.aspx">🧾 Quản lý đơn hàng</a>
+                <a href="QuanLyKhachHang.aspx">👤 Quản lý khách hàng</a>
+            </div>
+            <div class="admin-content">
+                <asp:ContentPlaceHolder ID="NoiDungAdmin" runat="server" />
+            </div>
+        </div>
+    </form>
+</body>
+</html>

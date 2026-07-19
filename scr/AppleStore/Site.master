@@ -1,0 +1,45 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
+
+<!DOCTYPE html>
+<html lang="vi">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Apple Store - Sản phẩm công nghệ Apple chính hãng</title>
+    <link href="~/Content/StyleSheet.css?v=20260719-3" rel="stylesheet" runat="server" id="lnkCss" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <!-- ===== THANH MENU ===== -->
+        <div class="header">
+            <a class="logo" href="Default.aspx"> Apple<span>Store</span></a>
+            <div class="menu" aria-label="Danh mục chính">
+                <a href="Default.aspx">Trang chủ</a>
+                <a href="SanPham.aspx">Sản phẩm</a>
+                <a href="SanPham.aspx?madm=1">iPhone</a>
+                <a href="SanPham.aspx?madm=2">iPad</a>
+                <a href="SanPham.aspx?madm=3">Mac</a>
+                <a href="SanPham.aspx?madm=4">Watch</a>
+                <a href="GioiThieu.aspx">Giới thiệu</a>
+            </div>
+            <div class="header-right">
+                <a href="GioHang.aspx" class="cart-link">🛒 Giỏ hàng
+                    <asp:Label ID="lblSoLuongGio" runat="server" CssClass="cart-badge" Text="0" />
+                </a>
+                <asp:Label ID="lblXinChao" runat="server" CssClass="welcome-text" />
+                <asp:HyperLink ID="lnkDangNhap" runat="server" CssClass="account-link"
+                    NavigateUrl="~/DangNhap.aspx">Đăng nhập</asp:HyperLink>
+                <asp:LinkButton ID="btnDangXuat" runat="server" CssClass="account-link"
+                    OnClick="btnDangXuat_Click" Visible="false">Đăng xuất</asp:LinkButton>
+            </div>
+        </div>
+
+        <asp:ContentPlaceHolder ID="NoiDung" runat="server" />
+
+        <div class="footer">
+            Đồ án môn học Chuyên đề ASP.NET - Xây dựng website bán sản phẩm công nghệ của Apple<br />
+            Sinh viên thực hiện: Hồ Ngọc Trai - Lớp DX23TT9 - Trường Đại học Trà Vinh
+        </div>
+    </form>
+</body>
+</html>
